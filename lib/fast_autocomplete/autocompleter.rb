@@ -79,12 +79,12 @@ module FastAutocomplete
     #       ex : 'wonder*ment' will perform both a prefix & suffix and intersect the sets
     #       ex : 'wonder' will perform both a prefix & suffix search and union the sets
     def autocomplete(query, options = @@default_options)
-      query = query.downcase unless @case_sensitive
       parsed = parse_wildcards(query)
       prefixes, suffixes = parsed.first, parsed.last
       pre = prefixes.map { |prefix| autocomplete_prefix(prefix, options) }.flatten
       suf = suffixes.map { |suffix| autocomplete_suffix(suffix, options) }.flatten
-      return prefixes.empty? || suffixes.empty? ? pre + suf : pre & suf
+      return pre & suf if !query.index('*').nil? && prefixes != suffixes && !prefixes.empty? && !suffixes.empty?
+      pre + suf
     end
 
     # Usage:

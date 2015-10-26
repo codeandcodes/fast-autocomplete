@@ -41,6 +41,7 @@ module FastAutocomplete
     end
 
     def autocomplete(word, options = { bfs: true, limit: 10 })
+      return [] if word.empty?
       to = traverse(word)
       prefix, node = to.first, to.last
       if node.nil? # no matches

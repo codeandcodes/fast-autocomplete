@@ -79,12 +79,12 @@ module FastAutocomplete
     #       ex : 'wonder*ment' will perform both a prefix & suffix and intersect the sets
     #       ex : 'wonder' will perform both a prefix & suffix search and union the sets
     def autocomplete(query, options = @@default_options)
-      parsed = parse_wildcards(query)
       query = query.downcase unless @case_sensitive
+      parsed = parse_wildcards(query)
       prefixes, suffixes = parsed.first, parsed.last
       pre = prefixes.map { |prefix| autocomplete_prefix(prefix, options) }.flatten
       suf = suffixes.map { |suffix| autocomplete_suffix(suffix, options) }.flatten
-      return query.index('*').nil? ? pre + suf : pre & suf
+      return prefixes.empty? || suffixes.empty? ? pre + suf : pre & suf
     end
 
     # Usage:
@@ -117,8 +117,6 @@ module FastAutocomplete
       suf_results.map(&:reverse) || []
     end
 
-    private
-
     def map_to_results(matches)
       if @map.nil?
         return matches if @case_sensitive
@@ -136,13 +134,13 @@ module FastAutocomplete
     end
 
     def parse_wildcards(substring)
+      return [[substring], [substring]] if substring.index('*').nil?
       substrs = substring.split('*')
-      p = substring[0] === '*' ? 1 : 0
-      s = substring[substring.length-1] === '*' ? 1 : 0
-      prefixes = substrs.length > 1 ? substrs.slice(p, substrs.length - 1 + s) : substrs
-      suffixes = substrs.length > 1 ? substrs.slice(1 - p, substrs.length - s) : substrs
-      [prefixes, suffixes]
+      s = substring[substring.length - 1] == '*' ? 1 : 0
+      prefixes = substrs.slice(0, substrs.length - 1 + s)
+      p = substring[0] == '*' ? 1 : 0
+      suffixes = substrs.slice(1 - p, substrs.length)
+      [prefixes.reject(&:empty?), suffixes.reject(&:empty?)]
     end
-
   end
 end

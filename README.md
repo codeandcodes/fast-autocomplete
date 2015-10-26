@@ -68,6 +68,7 @@ Then you can autocomplete on prefixes, suffixes, or pre*suffixes:
 #### Options
 
 You can instantiate each autocompleter with a set of options (reproduced here)
+```ruby
     # Options
     # =======
     # limit           : integer
@@ -104,7 +105,7 @@ You can instantiate each autocompleter with a set of options (reproduced here)
     #                   the autocompleter will only keep the last mapping
     #                   Example: {'TiGER' => 'tiger', 'Tiger' => 'tiger'} autocomplete keeps
     #                     the mapping from tiger -> 'Tiger'
-
+```
 
 ### Example Usage (for adding to rails):
 

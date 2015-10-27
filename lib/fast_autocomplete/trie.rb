@@ -17,11 +17,18 @@ module FastAutocomplete
     end
 
     def remove(word)
-
+      n = traverse(word)
+      return false if n.last.nil?
+      if n.last.has_children?
+        n.last.terminal = false
+      else
+        n.last.parent.children.delete(n.last.value)
+      end
+      true
     end
 
     def has?(word)
-
+      (n = traverse(word)).last.nil? ? false : n.last.terminal
     end
 
     def traverse(word)

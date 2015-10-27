@@ -5,3 +5,5 @@ RSpec::Core::RakeTask.new
 
 task :default => :spec
 task :test => :spec
+
+Dir.glob('lib/tasks/*.rake').each { |r| import r }

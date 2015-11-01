@@ -6,7 +6,7 @@ module FastAutocomplete
       @value = value
       @parent = parent
       @terminal = terminal
-      @children = {}
+      @children = Hash.new
     end
 
     public
@@ -35,16 +35,16 @@ module FastAutocomplete
 
     def insert(word)
       return if word.empty? || word.nil?
-      c = word[0]
-      i = c.ord
-      l = word.length
       node = self
-      if !node.has_child?(i)
-        node.children[i] = Node.new(c, node, l == 1)
+      l = word.length
+      counter = 0
+      word.each_char do |c|
+        i = c.ord
+        node.children[i] ||= Node.new(c, node, l == 1)
+        counter += 1
+        node = node.children[i]
+        node.terminal = true if counter == l
       end
-      node = node.children[i]
-      node.terminal = true if l == 1
-      node.insert(word.slice(1, l - 1))
     end
 
     def traverse_bfs(array, prefix, limit = 10)
@@ -54,7 +54,7 @@ module FastAutocomplete
         entry = queue.deq
         array << entry.first if entry.last.terminal
         break if limit > 0 && array.length >= limit
-        entry.last.children.each_pair do |value, child|
+        entry.last.children.each_value do |child|
           queue.enq([entry.first + child.value, child])
         end
       end

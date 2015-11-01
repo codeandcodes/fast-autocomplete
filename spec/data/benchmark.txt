@@ -1,3 +1,51 @@
+Memory Profile w/ruby hash
+=========================
+└─(~/workspace/fast-autocomplete)─(10 files, 72b)─> rake benchmark:creation
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 19.700000   0.380000  20.080000 ( 20.084846)
+>avg:   3.940000   0.076000   4.016000 (  4.016969)
+Measure Mode: memory
+Thread ID: 70210917128960
+Fiber ID: 70210948947720
+Total: 100177.703125
+Sort by: self_time
+
+ %self      total      self      wait     child     calls  name
+ 89.84  89996.938 89996.938     0.000     0.000  2879890   FastAutocomplete::Node#initialize
+
+┌(admin@MacbookPro)─(✓)─(09:24 PM Sat Oct 31)  GoogleHashDenseIntToRuby.new
+└─(~/workspace/fast-autocomplete)─(10 files, 72b)─> rake benchmark:creation
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 44.010000   0.690000  44.700000 ( 44.703180)
+>avg:   8.802000   0.138000   8.940000 (  8.940636)
+Measure Mode: memory
+Thread ID: 70324066867960
+Fiber ID: 70324120247880
+Total: 145177.890625
+Sort by: self_time
+
+ %self      total      self      wait     child     calls  name
+ 61.99  134996.688 89996.938     0.000 44999.750  2879890   FastAutocomplete::Node#initialize
+
+
+Memory Profile w/ruby hash
+=========================
+└─(~/workspace/fast-autocomplete)─(10 files, 72b)─> rake benchmark:creation
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 19.700000   0.380000  20.080000 ( 20.084846)
+>avg:   3.940000   0.076000   4.016000 (  4.016969)
+Measure Mode: memory
+Thread ID: 70210917128960
+Fiber ID: 70210948947720
+Total: 100177.703125
+Sort by: self_time
+
+ %self      total      self      wait     child     calls  name
+ 89.84  89996.938 89996.938     0.000     0.000  2879890   FastAutocomplete::Node#initialize
+
 
 With ascii as hashes
 ====================

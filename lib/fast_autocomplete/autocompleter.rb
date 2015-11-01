@@ -96,14 +96,14 @@ module FastAutocomplete
     #   "AARD-VARK" => "An edentate mammal, of the genus Orycteropus, somewhat resembling a pig, common in some parts of Southern Africa. It burrows in the ground, and feeds entirely on ants, which it catches with itslong, slimy tongue."
     def autocomplete_matches(query, options = @@default_options)
       raise ArgumentError, 'words must be an array or a hash' if @map.nil?
-      query = query.downcase unless @case_sensitive
+      query.downcase! unless @case_sensitive
       matches = autocomplete(query, options)
       map_to_results(matches)
     end
 
     def autocomplete_prefix(query, options = @@default_options)
       raise UninitializedError if @prefix_trie.nil?
-      query = query.downcase unless @case_sensitive
+      query.downcase! unless @case_sensitive
       pre_results = @prefix_trie.autocomplete(query, options) unless
           @prefix_trie.nil?
       pre_results || []
@@ -111,7 +111,7 @@ module FastAutocomplete
 
     def autocomplete_suffix(query, options = @@default_options)
       raise UninitializedError if @suffix_trie.nil?
-      query = query.downcase unless @case_sensitive
+      query.downcase! unless @case_sensitive
       suf_results = @suffix_trie.autocomplete(query.reverse, options) unless
           @suffix_trie.nil?
       suf_results.map(&:reverse) || []

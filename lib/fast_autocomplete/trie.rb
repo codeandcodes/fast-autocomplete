@@ -4,16 +4,9 @@ module FastAutocomplete
 
     @@default_limit = 10
 
-    def initialize(words, options = {})
-      @words = words
+    def initialize(words)
       @root = Node.new('', nil)
-      build
-    end
-
-    def build
-      @words.each do |word|
-        @root.insert(word)
-      end
+      build(words)
     end
 
     def remove(word)
@@ -33,12 +26,12 @@ module FastAutocomplete
 
     def traverse(word)
       node = @root
-      chars = word.split('')
       prefix = ''
-      chars.each_with_index do |c, index|
-        if node.has_child?(c)
-          prefix += c
-          node = node.children[c]
+      word.each_char do |c|
+        i = c.ord
+        if node.has_child?(i)
+          prefix << c
+          node = node.children[i]
         else
           return [prefix, nil] if node.terminal
           return [nil, nil]
@@ -62,6 +55,14 @@ module FastAutocomplete
         node.traverse_dfs(suffixes, prefix, options[:limit] || @@default_limit)
       end
       suffixes
+    end
+
+    private
+
+    def build(words)
+      words.each do |word|
+        @root.insert(word)
+      end
     end
   end
 end

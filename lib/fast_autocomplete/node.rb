@@ -36,13 +36,15 @@ module FastAutocomplete
     def insert(word)
       return if word.empty? || word.nil?
       c = word[0]
+      i = c.ord
+      l = word.length
       node = self
-      if !node.has_child?(c)
-        node.children[c] = Node.new(c, node, word.length == 1)
+      if !node.has_child?(i)
+        node.children[i] = Node.new(c, node, l == 1)
       end
-      node = node.children[c]
-      node.terminal = true if word.length == 1
-      node.insert(word.slice(1, word.length - 1))
+      node = node.children[i]
+      node.terminal = true if l == 1
+      node.insert(word.slice(1, l - 1))
     end
 
     def traverse_bfs(array, prefix, limit = 10)
@@ -53,7 +55,7 @@ module FastAutocomplete
         array << entry.first if entry.last.terminal
         break if limit > 0 && array.length >= limit
         entry.last.children.each_pair do |value, child|
-          queue.enq([entry.first + value, child])
+          queue.enq([entry.first + child.value, child])
         end
       end
     end

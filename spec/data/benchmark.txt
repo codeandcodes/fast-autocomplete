@@ -1,0 +1,31 @@
+
+With ascii as hashes
+====================
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 10.800000   0.380000  11.180000 ( 11.173289)
+>avg:   2.160000   0.076000   2.236000 (  2.234658)
+Dictionary size: 86036.  Running through prefix traversal 1000 times.
+       user     system      total        real
+prefix:  3.000000   0.000000   3.000000 (  3.002058)
+   0.003000   0.000000   0.003000 (  0.003002)
+Dictionary size: 86036.  Running through suffix traversal 10000 times.
+       user     system      total        real
+suffix: 11.640000   0.020000  11.660000 ( 11.658978)
+   0.001164   0.000002   0.001166 (  0.001166)
+
+
+v.0.0.1
+=======
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 12.140000   0.420000  12.560000 ( 12.564602)
+>avg:   2.428000   0.084000   2.512000 (  2.512920)
+Dictionary size: 86036.  Running through prefix traversal 1000 times.
+       user     system      total        real
+prefix:  2.710000   0.010000   2.720000 (  2.721595)
+   0.002710   0.000010   0.002720 (  0.002722)
+Dictionary size: 86036.  Running through suffix traversal 10000 times.
+       user     system      total        real
+suffix: 11.870000   0.030000  11.900000 ( 11.906642)
+   0.001187   0.000003   0.001190 (  0.001191)

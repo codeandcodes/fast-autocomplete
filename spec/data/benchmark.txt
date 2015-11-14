@@ -1,3 +1,19 @@
+With Implementation through IntSetInterface
+===========================================
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 10.930000   0.360000  11.290000 ( 11.290524)
+>avg:   2.186000   0.072000   2.258000 (  2.258105)
+Dictionary size: 86036.  Running through prefix traversal 1000 times.
+       user     system      total        real
+prefix:  3.220000   0.010000   3.230000 (  3.223040)
+   0.003220   0.000010   0.003230 (  0.003223)
+Dictionary size: 86036.  Running through suffix traversal 1000 times.
+       user     system      total        real
+suffix:  1.130000   0.000000   1.130000 (  1.136301)
+   0.001130   0.000000   0.001130 (  0.001136)
+
+
 Memory Profile w/ruby hash
 =========================
 └─(~/workspace/fast-autocomplete)─(10 files, 72b)─> rake benchmark:creation

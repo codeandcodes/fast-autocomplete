@@ -27,23 +27,23 @@ namespace :benchmark do
   desc 'benchmark autocomplete creation against dictionary'
   task :creation, [:times] do |task, args|
     dictionary = read_dictionary
-
-    RubyProf.start
-    n = args[:times] || 5
+    # RubyProf.measure_mode = RubyProf::MEMORY
+    # RubyProf.start
+    n = args[:times].to_i == 0 ? 5 : args[:times].to_i
     puts "Dictionary size: #{dictionary.size}.  Running through creation #{n} times."
     Benchmark.bm(n, ">avg:") do |x|
       tt = x.report("creation:") { for i in 1..n; FastAutocomplete::Autocompleter.new(dictionary); end }
       [tt/n]
     end
-    result = RubyProf.stop
-    printer = RubyProf::FlatPrinter.new(result)
-    printer.print(STDOUT)
+    # result = RubyProf.stop
+    # printer = RubyProf::FlatPrinter.new(result)
+    # printer.print(STDOUT)
   end
 
   desc 'benchmark autocomplete prefix search against dictionary'
   task :prefix, [:times] do |task, args|
     dictionary = read_dictionary
-    RubyProf.start
+    # RubyProf.start
     n = args[:times].to_i == 0 ? 1000 : args[:times].to_i
     puts "Dictionary size: #{dictionary.size}.  Running through prefix traversal #{n} times."
     autocompleter = FastAutocomplete::Autocompleter.new(dictionary)
@@ -54,15 +54,15 @@ namespace :benchmark do
       end
       [tt/n]
     end
-    result = RubyProf.stop
-    printer = RubyProf::FlatPrinter.new(result)
-    printer.print(STDOUT)
+    # result = RubyProf.stop
+    # printer = RubyProf::FlatPrinter.new(result)
+    # printer.print(STDOUT)
   end
 
   desc 'benchmark autocomplete suffix search against dictionary'
   task :suffix, [:times] do |task, args|
     dictionary = read_dictionary
-    n = args[:times].to_i == 0 ? 10000 : args[:times].to_i
+    n = args[:times].to_i == 0 ? 1000 : args[:times].to_i
     puts "Dictionary size: #{dictionary.size}.  Running through suffix traversal #{n} times."
     autocompleter = FastAutocomplete::Autocompleter.new(dictionary)
     words = random_substrings(dictionary, n: n, suffix: true)

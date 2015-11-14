@@ -6,17 +6,17 @@ module FastAutocomplete
       @value = value
       @parent = parent
       @terminal = terminal
-      @children = Hash.new
+      @children = IntSet::IntSetHash.new # can replace this implementation
     end
 
     public
 
     def has_child?(value)
-      @children.key?(value)
+      @children.has?(value)
     end
 
     def has_children?
-      !@children.keys.empty?
+      !@children.empty?
     end
 
     def path(str = '')
@@ -38,11 +38,11 @@ module FastAutocomplete
       node = self
       l = word.length
       counter = 0
-      word.each_char do |c|
-        i = c.ord
-        node.children[i] ||= Node.new(c, node, l == 1)
+      word.bytes.each do |c|
+        i = c
+        node.children.insert(i, Node.new(c.chr, node, l == 1)) unless node.children.has?(i)
         counter += 1
-        node = node.children[i]
+        node = node.children.get(i)
         node.terminal = true if counter == l
       end
     end
@@ -54,16 +54,16 @@ module FastAutocomplete
         entry = queue.deq
         array << entry.first if entry.last.terminal
         break if limit > 0 && array.length >= limit
-        entry.last.children.each_value do |child|
+        entry.last.children.values.each do |child|
           queue.enq([entry.first + child.value, child])
         end
       end
     end
 
     def traverse_dfs(array, prefix, limit = 10)
-      @children.each_key do |c|
+      @children.values.each do |c|
         break if limit > 0 && array.length >= limit
-        @children[c].traverse_dfs(array, prefix + c, limit)
+        c.traverse_dfs(array, prefix + c.value, limit)
       end
       if @terminal
         return if array.length >= limit

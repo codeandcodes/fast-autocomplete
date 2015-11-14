@@ -31,7 +31,7 @@ module FastAutocomplete
         i = c.ord
         if node.has_child?(i)
           prefix << c
-          node = node.children[i]
+          node = node.children.get(i)
         else
           return [prefix, nil] if node.terminal
           return [nil, nil]

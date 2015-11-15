@@ -46,13 +46,40 @@ module FastAutocomplete
 
       def f_index(key)
         #  this allocates a tremendous amount of memory, it doesn't get collected
+        # DEFAULT BSEARCH
         # (a = [*@children.each_with_index].bsearch { |x, _| x.key >= key }).nil? ? nil : a.last
         return nil if @s_max.nil? || @s_max < key
-        i = 0
-        while i < @children.size - 1 && @children[i].key < key do
-          i += 1
+        # ITERATIVE
+        # i = 0
+        # while i < @children.size - 1 && @children[i].key < key do
+        #   i += 1
+        # end
+        # i
+        return b_search(key)
+      end
+
+      # [1, 5, 10, 22, 33, 45]
+      # b_search(1) = 0
+      # b_search(46) = nil
+      # b_search(10) = 2
+      # b_search(11) = 3
+      def b_search(key)
+        low, hi = 0, @children.size
+        while (low < hi)
+          mid = (low + hi) / 2
+          if @children[mid].key == key
+            return mid
+          elsif @children[mid].key < key
+            low = mid + 1
+          else
+            hi = mid
+          end
         end
-        i
+        if hi == low # first element
+          return 0 if hi == 0
+          return hi if hi < @children.size
+          return nil
+        end
       end
     end
   end

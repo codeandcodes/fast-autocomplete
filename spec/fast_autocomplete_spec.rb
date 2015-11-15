@@ -89,5 +89,21 @@ describe FastAutocomplete do
         end
       end
     end
+
+    describe '#autocomplete_prefix dfs' do
+      it 'should autocomplete a prefix string with the complete list of matches' do
+        expect(@autocompleter.autocomplete_prefix('inner', dfs: true, limit: 0))
+            .to eq downcase_keys_start_with(@dictionary, 'inner').sort
+      end
+
+      it 'should contain the word itself if the word is in the trie' do
+        expect(@autocompleter.autocomplete_prefix('innerly', dfs: true, limit: 0))
+            .to eq downcase_keys_start_with(@dictionary, 'innerly').sort
+      end
+
+      it 'should return the same results if autocompleter is case insensitive' do
+        expect(@autocompleter.autocomplete_prefix('INNER', dfs: true, limit: 0)).to_not eq []
+      end
+    end
   end
 end

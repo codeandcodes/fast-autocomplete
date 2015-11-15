@@ -6,7 +6,7 @@ module FastAutocomplete
       @value = value
       @parent = parent
       @terminal = terminal
-      @children = IntSet::IntSetHash.new # can replace this implementation
+      @children = IntSet::IntSetArray.new # can replace this implementation
     end
 
     public
@@ -61,13 +61,13 @@ module FastAutocomplete
     end
 
     def traverse_dfs(array, prefix, limit = 10)
+      if @terminal
+        return if limit > 0 && array.length >= limit
+        array << prefix
+      end
       @children.values.each do |c|
         break if limit > 0 && array.length >= limit
         c.traverse_dfs(array, prefix + c.value, limit)
-      end
-      if @terminal
-        return if array.length >= limit
-        array << prefix
       end
     end
   end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fast_autocomplete (0.0.1)
+    fast_autocomplete (0.0.2.pre.beta1)
 
 GEM
   remote: https://rubygems.org/

@@ -1,4 +1,29 @@
-With Implementation through IntSetInterface
+With IntSetArray
+================
+Dictionary size: 86036.  Running through creation 5 times.
+            user     system      total        real
+creation: 17.620000   0.330000  17.950000 ( 17.958217)
+>avg:   3.524000   0.066000   3.590000 (  3.591643)
+Dictionary size: 86036.  Running through prefix traversal 1000 times.
+       user     system      total        real
+prefix:  3.570000   0.020000   3.590000 (  3.592919)
+   0.003570   0.000020   0.003590 (  0.003593)
+Dictionary size: 86036.  Running through suffix traversal 1000 times.
+       user     system      total        real
+suffix:  1.420000   0.000000   1.420000 (  1.427502)
+   0.001420   0.000000   0.001420 (  0.001428)
+
+Dictionary size: 86036.  Running through creation 1 times.
+        user     system      total        real
+creation: 13.540000   0.110000  13.650000 ( 13.648157)
+>avg: 13.540000   0.110000  13.650000 ( 13.648157)
+Measure Mode: memory
+Thread ID: 70160178633460
+Fiber ID: 70160215905940
+Total: 36217.828125
+Sort by: self_time
+
+With IntSetHash
 ===========================================
 Dictionary size: 86036.  Running through creation 5 times.
             user     system      total        real
@@ -12,6 +37,16 @@ Dictionary size: 86036.  Running through suffix traversal 1000 times.
        user     system      total        real
 suffix:  1.130000   0.000000   1.130000 (  1.136301)
    0.001130   0.000000   0.001130 (  0.001136)
+
+Dictionary size: 86036.  Running through creation 1 times.
+        user     system      total        real
+creation:  5.920000   0.120000   6.040000 (  6.040988)
+>avg:  5.920000   0.120000   6.040000 (  6.040988)
+Measure Mode: memory
+Thread ID: 70155569093360
+Fiber ID: 70155592898100
+Total: 32501.937500
+Sort by: self_time
 
 
 Memory Profile w/ruby hash

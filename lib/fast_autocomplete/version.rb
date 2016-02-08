@@ -1,3 +1,3 @@
 module FastAutocomplete
-  VERSION = "0.0.3-beta1"
+  VERSION = "0.0.4-beta1"
 end
